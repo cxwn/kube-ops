@@ -16,6 +16,7 @@ fi [ $? -eq 0 ] ;
         yum list docker-ce --showduplicates|grep "^doc"|sort -r
         yum -y install docker-ce-18.06.0.ce-3.el7
         systemctl enable docker && systemctl start docker;
+        rm -f /etc/yum.repos.d/docker-ce.repo
     else
         echo "Install failed! Please try again! " ;
         exit 110
