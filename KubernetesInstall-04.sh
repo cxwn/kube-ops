@@ -1,5 +1,5 @@
 #!/bin/bash
-cp cfssl* /usr/local/bin/
+mv cfssl* /usr/local/bin/
 chmod +x /usr/local/bin/cfssl*
 ls -l /usr/local/bin/
 SSL_Dir=/etc/kubernetes/ssl
