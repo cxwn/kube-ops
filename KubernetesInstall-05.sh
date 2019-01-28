@@ -55,5 +55,7 @@ LimitNOFILE=65536
 [Install]
 WantedBy=multi-user.target
 EOF
+
 systemctl daemon-reload
-systemctl enable etcd.servcie --now
+systemctl enable etcd.service --now
+systemctl status etcd
