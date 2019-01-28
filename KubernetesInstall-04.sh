@@ -65,6 +65,6 @@ EOF
 cd $SSL_Dir
 cfssl_linux-amd64 gencert -initca ca-csr.json | cfssljson_linux-amd64 -bare ca -
 cfssl_linux-amd64 gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=www server-csr.json | cfssljson_linux-amd64 -bare server
-ls *pem
-# ca-key.pem  ca.pem  server-key.pem  server.pem
 cd ~
+# ca-key.pem  ca.pem  server-key.pem  server.pem
+ls $SSL_Dir/*.pem
