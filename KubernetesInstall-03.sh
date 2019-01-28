@@ -10,7 +10,7 @@ while true;
         curl -L -C - -O https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64
         if [ $? -eq 0 ];
             then 
-                echo "Congratulations! All software packages have been downloaded."
+                echo "Congratulations! All software packages have been downloaded. "
                 break
         fi
     done
