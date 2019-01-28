@@ -45,9 +45,9 @@ cat<<EOF>$SSL_Dir/server-csr.json
 {
     "CN": "etcd",
     "hosts": [
-    "172.31.3.11",
-    "172.31.3.12",
-    "172.31.3.13"
+    "172.31.2.11",
+    "172.31.2.12",
+    "172.31.2.13"
     ],
     "key": {
         "algo": "rsa",
@@ -56,8 +56,8 @@ cat<<EOF>$SSL_Dir/server-csr.json
     "names": [
         {
             "C": "CN",
-            "L": "BeiJing",
-            "ST": "BeiJing"
+            "L": "Beijing",
+            "ST": "Beijing"
         }
     ]
 }
