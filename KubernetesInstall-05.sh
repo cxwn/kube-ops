@@ -17,7 +17,7 @@ ETCD_LISTEN_CLIENT_URLS="https://172.31.2.11:2379"
 #[Clustering]
 ETCD_INITIAL_ADVERTISE_PEER_URLS="https://172.31.2.11:2380"
 ETCD_ADVERTISE_CLIENT_URLS="https://172.31.2.11:2379"
-ETCD_INITIAL_CLUSTER="etcd-01=https://172.31.2.11:2380,etcd-02=https://172.31.2.11:2380,etcd-03=https://172.31.2.11:2380"
+ETCD_INITIAL_CLUSTER="etcd-01=https://172.31.2.11:2380,etcd-02=https://172.31.2.12:2380,etcd-03=https://172.31.2.13:2380"
 ETCD_INITIAL_CLUSTER_TOKEN="etcd-cluster"
 ETCD_INITIAL_CLUSTER_STATE="new"
 EOF
@@ -32,7 +32,7 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-EnvironmentFile=-$ETCD_CONF
+EnvironmentFile=$ETCD_CONF
 WorkingDirectory=/var/lib/etcd
 ExecStart=/usr/local/bin/etcd \
 --name=\${ETCD_NAME} \
