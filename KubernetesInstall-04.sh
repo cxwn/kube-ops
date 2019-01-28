@@ -1,11 +1,10 @@
 #!/bin/bash
 mv cfssl* /usr/local/bin/
 chmod +x /usr/local/bin/cfssl*
-ls -l /usr/local/bin/
-SSL_Dir=/etc/kubernetes/ssl
-mkdir -p $SSL_Dir
+ETCD_SSL=/etc/etcd/ssl
+mkdir -p $ETCD_SSL
 # Create some CA certificates for etcd cluster.
-cat<<EOF>$SSL_Dir/ca-config.json
+cat<<EOF>$ETCD_SSL/ca-config.json
 {
   "signing": {
     "default": {
@@ -25,7 +24,7 @@ cat<<EOF>$SSL_Dir/ca-config.json
   }
 }
 EOF
-cat<<EOF>$SSL_Dir/ca-csr.json
+cat<<EOF>$ETCD_SSL/ca-csr.json
 {
     "CN": "etcd CA",
     "key": {
@@ -41,7 +40,7 @@ cat<<EOF>$SSL_Dir/ca-csr.json
     ]
 }
 EOF
-cat<<EOF>$SSL_Dir/server-csr.json
+cat<<EOF>$ETCD_SSL/server-csr.json
 {
     "CN": "etcd",
     "hosts": [
@@ -62,9 +61,9 @@ cat<<EOF>$SSL_Dir/server-csr.json
     ]
 }
 EOF
-cd $SSL_Dir
+cd $ETCD_SSL
 cfssl_linux-amd64 gencert -initca ca-csr.json | cfssljson_linux-amd64 -bare ca -
 cfssl_linux-amd64 gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=www server-csr.json | cfssljson_linux-amd64 -bare server
 cd ~
 # ca-key.pem  ca.pem  server-key.pem  server.pem
-ls $SSL_Dir/*.pem
+ls $ETCD_SSL/*.pem
