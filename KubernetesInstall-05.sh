@@ -34,14 +34,14 @@ Wants=network-online.target
 Type=notify
 EnvironmentFile=$ETCD_CONF
 ExecStart=/usr/local/bin/etcd \
---name=${ETCD_NAME} \
---data-dir=${ETCD_DATA_DIR} \
---listen-peer-urls=${ETCD_LISTEN_PEER_URLS} \
---listen-client-urls=${ETCD_LISTEN_CLIENT_URLS},http://127.0.0.1:2379 \
---advertise-client-urls=${ETCD_ADVERTISE_CLIENT_URLS} \
---initial-advertise-peer-urls=${ETCD_INITIAL_ADVERTISE_PEER_URLS} \
---initial-cluster=${ETCD_INITIAL_CLUSTER} \
---initial-cluster-token=${ETCD_INITIAL_CLUSTER_TOKEN} \
+--name=\${ETCD_NAME} \
+--data-dir=\${ETCD_DATA_DIR} \
+--listen-peer-urls=\${ETCD_LISTEN_PEER_URLS} \
+--listen-client-urls=\${ETCD_LISTEN_CLIENT_URLS},http://127.0.0.1:2379 \
+--advertise-client-urls=\${ETCD_ADVERTISE_CLIENT_URLS} \
+--initial-advertise-peer-urls=\${ETCD_INITIAL_ADVERTISE_PEER_URLS} \
+--initial-cluster=\${ETCD_INITIAL_CLUSTER} \
+--initial-cluster-token=\${ETCD_INITIAL_CLUSTER_TOKEN} \
 --initial-cluster-state=new \
 --cert-file=/etc/etcd/ssl/server.pem \
 --key-file=/etc/etcd/ssl/server-key.pem \
@@ -56,4 +56,4 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 EOF
 systemctl daemon-reload
-systemctl etcd.servcie --now
+systemctl enable etcd.servcie --now
