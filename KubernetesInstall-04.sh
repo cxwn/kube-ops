@@ -2,8 +2,8 @@
 cp cfssl* /usr/local/bin/
 chmod +x /usr/local/bin/cfssl*
 ls -l /usr/local/bin/
-mkdir -p /etc/kubernetes/ssl
-$SSL_Dir=/etc/kubernetes/ssl
+SSL_Dir=/etc/kubernetes/ssl
+mkdir -p $SSL_Dir
 # Create some CA certificates for etcd cluster.
 cat<<EOF>$SSL_Dir/ca-config.json
 {
