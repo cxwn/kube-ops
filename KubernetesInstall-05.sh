@@ -1,5 +1,5 @@
 #!/bin/bash
-# Deploy and configurate the etcd service.
+# Deploy and configurate etcd service on the master node.
 ETCD_CONF=/etc/etcd/etcd.conf
 ETCD_SSL=/etc/etcd/ssl
 ETCD_SERVICE=/usr/lib/systemd/system/etcd.service
