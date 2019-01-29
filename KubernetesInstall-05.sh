@@ -33,7 +33,6 @@ Wants=network-online.target
 [Service]
 Type=notify
 EnvironmentFile=$ETCD_CONF
-WorkingDirectory=/var/lib/etcd
 ExecStart=/usr/local/bin/etcd \
 --name=\${ETCD_NAME} \
 --data-dir=\${ETCD_DATA_DIR} \
