@@ -12,7 +12,7 @@ sed -i '/ETCD_LISTEN_PEER_URLS/{s/2.11/2.12/g}' /etc/etcd/etcd.conf
 sed -i '/ETCD_LISTEN_CLIENT_URLS/{s/2.11/2.12/g}' /etc/etcd/etcd.conf
 sed -i '/ETCD_INITIAL_ADVERTISE_PEER_URLS/{s/2.11/2.12/g}' /etc/etcd/etcd.conf
 sed -i '/ETCD_ADVERTISE_CLIENT_URLS/{s/2.11/2.12/g}' /etc/etcd/etcd.conf
-rm -rf etcd-v3.3.11-linux-amd64*
+rm -rf ~/etcd-v3.3.11-linux-amd64*
 systemctl daemon-reload
 systemctl enable etcd.service --now
 systemctl status etcd
