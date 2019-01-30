@@ -43,7 +43,7 @@ Wants=etcd.service
 
 [Service]
 EnvironmentFile=-$KUBE_API_CONF
-ExecStart=/usr/local/bin/kube-apiserver $KUBE_APISERVER_OPTS
+ExecStart=/usr/local/bin/kube-apiserver \$KUBE_APISERVER_OPTS
 Restart=on-failure
 
 [Install]
@@ -52,4 +52,5 @@ EOF
 
 systemctl daemon-reload
 systemctl enable kube-apiserver.service --now
+sleep 20
 systemctl status kube-apiserver.service
