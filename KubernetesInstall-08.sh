@@ -1,6 +1,7 @@
 #!/bin/bash
 KUBE_CONF=/etc/kubernetes
 FLANNEL_CONF=$KUBE_CONF/flannel.conf
+mkdir $KUBE_CONF
 tar -xvzf flannel-v0.11.0-linux-amd64.tar.gz
 mv {flanneld,mk-docker-opts.sh} /usr/local/bin/
 # Check whether etcd cluster is healthy.
@@ -48,3 +49,6 @@ sed -i.bak -e '/ExecStart/i EnvironmentFile=\/run\/flannel\/subnet.env' -e 's/Ex
 systemctl daemon-reload
 systemctl enable flanneld --now
 systemctl restart docker
+systemctl status flanneld
+systemctl status docker
+ip address show
