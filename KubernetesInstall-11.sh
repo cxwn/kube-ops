@@ -1,6 +1,7 @@
 #!/bin/bash
 # Deploy the scheduler service.
-KUBE_ETC=/etc/kubernetesKUBE_SCHEDULER_CONF=$KUBE_ETC/kube-scheduler.conf
+KUBE_ETC=/etc/kubernetes
+KUBE_SCHEDULER_CONF=$KUBE_ETC/kube-scheduler.conf
 cat>$KUBE_SCHEDULER_CONF<<EOF
 KUBE_SCHEDULER_OPTS="--logtostderr=true \
 --v=4 \
