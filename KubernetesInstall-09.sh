@@ -74,7 +74,7 @@ cd $KUBE_SSL
 cfssl_linux-amd64 gencert -initca ca-csr.json | cfssljson_linux-amd64 -bare ca -
 cfssl_linux-amd64 gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes server-csr.json | cfssljson_linux-amd64 -bare server
 
-# Create kube-proxy CA
+# Create kube-proxy CA. 
 cat>$KUBE_SSL/kube-proxy-csr.json<<EOF
 {
   "CN": "system:kube-proxy",
@@ -95,5 +95,5 @@ cat>$KUBE_SSL/kube-proxy-csr.json<<EOF
 }
 EOF
 cfssl_linux-amd64 gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-proxy-csr.json | cfssljson_linux-amd64 -bare kube-proxy
-ls *.pem
+ls $KUBE_SSL/*.pem
 cd ~
