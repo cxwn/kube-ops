@@ -2,7 +2,7 @@
 KUBE_ETC=/etc/kubernetes
 KUBE_API_CONF=/etc/kubernetes/apiserver.conf
 tar -xvzf kubernetes-server-linux-amd64.tar.gz
-mv kubernetes/server/bin/{kube-apiserver,kube-scheduler,kube-controller-manager} /usr/local/bin/
+cp kubernetes/server/bin/{kube-apiserver,kube-scheduler,kube-controller-manager} /usr/local/bin/
 
 # Create a token file.
 cat>$KUBE_ETC/token.csv<<EOF
