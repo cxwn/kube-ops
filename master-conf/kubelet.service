@@ -1,0 +1,13 @@
+[Unit]
+Description=Kubernetes Kubelet
+After=docker.service
+Requires=docker.service
+
+[Service]
+EnvironmentFile=/etc/kubernetes/kubelet.conf
+ExecStart=/usr/local/bin/kubelet $KUBELET_OPTS
+Restart=on-failure
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
