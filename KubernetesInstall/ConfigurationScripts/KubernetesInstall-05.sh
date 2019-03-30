@@ -33,7 +33,8 @@ Wants=network-online.target
 [Service]
 Type=notify
 EnvironmentFile=$ETCD_CONF
-ExecStart=/usr/local/bin/etcd \
+WorkingDirectory=/var/lib/etcd
+ExecStart=$BinaryDir/etcd \
 --name=\${ETCD_NAME} \
 --data-dir=\${ETCD_DATA_DIR} \
 --listen-peer-urls=\${ETCD_LISTEN_PEER_URLS} \
