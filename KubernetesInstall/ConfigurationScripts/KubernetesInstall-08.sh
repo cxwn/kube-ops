@@ -34,7 +34,7 @@ Before=docker.service
 [Service]
 Type=notify
 EnvironmentFile=$FLANNEL_CONF
-ExecStart=/usr/local/bin/flanneld --ip-masq $FLANNEL_OPTIONS
+ExecStart=/usr/local/bin/flanneld --ip-masq \$FLANNEL_OPTIONS
 ExecStartPost=/usr/local/bin/mk-docker-opts.sh -k DOCKER_NETWORK_OPTIONS -d /run/flannel/subnet.env
 Restart=on-failure
 
