@@ -1,4 +1,4 @@
-# 二进制包20分钟快速部署 Kubernetes v1.14.0 集群
+# 二进制包一键快速部署 Kubernetes v1.14.0 集群
 
 ## 一 环境
 
@@ -93,7 +93,7 @@ reboot
 
 ### 3.2 安装脚本
 
-安装脚本较长，此处省略，日志以供参考，拓展思路。此脚本在Master节点执行即可，安装过程无需连接外网，安装日志如下：
+安装脚，参见 install-kubernetes.sh ，日志以供参考，拓展思路。此脚本在Master节点执行即可，安装过程无需连接外网，安装日志如下：
 
 ```log
 Generating public/private rsa key pair.
