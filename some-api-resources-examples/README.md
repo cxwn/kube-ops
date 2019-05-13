@@ -13,3 +13,17 @@ kubectl explain api-resource
 ```
 
 ## Pod
+
+## ReplicaSet
+
+## Deployment
+
+## StatefulSet
+
+## Job
+
+## CronJob
+
+## Service
+
+## Ingress

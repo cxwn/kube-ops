@@ -9,3 +9,7 @@ Kubernetes operation and maintenance practice. Something about kubernetes.
 ## step-by-step-installation-of-kubernetes
 
 Kubernetes 二进制包安装过程的步骤分解。
+
+## some-api-resources-examples
+
+Kubernetes 中的一些 API-resources 使用例子，可以参考。
