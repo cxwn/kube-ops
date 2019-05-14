@@ -9,7 +9,8 @@ KubeCA='/etc/kubernetes/ca.d'
 EtcdConf='/etc/etcd/conf.d'
 EtcdCA='/etc/etcd/ca.d'
 FlanneldConf='/etc/flanneld'
-mkdir ${WorkDir}
+[ -d ${WorkDir} ] && rm -rf ${WorkDir}
+[ ! -d ${WorkDir} ] && mkdir ${WorkDir}
 cd ${WorkDir}
 
 # Configure SSH Password-Free Login. 
