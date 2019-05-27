@@ -73,4 +73,6 @@ EOF
         echo 'Your input is wrong. Please check! '
         continue
     done
+echo "Your system will reboot. "
+sleep 10
 reboot

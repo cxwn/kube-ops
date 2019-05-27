@@ -15,6 +15,11 @@
 #===============================================================================
 
 . kube_config.sh
+[ -z "$(free -h|grep '^Swap')" ] && echo "The swap of your system swap is satisfactory."
+[ -n "$(free -h|grep '^Swap')" ] && echo "The swap of your system swap is not satisfactory. Please check. " && exit 1
+[ "$(getenforce)" == "Disabled" ] && echo "Your SElinux is not disabled. Please check. "
+[ "$(getenforce)" != "Disabled" ] && echo "Your SElinux is not disabled. Please check. " && exit 2
+sysctl net.ipv4.ip_forward && sysctl net.bridge.bridge-nf-call-ip6tables && sysctl net.bridge.bridge-nf-call-iptables
 while true;
    do
    getenforce
