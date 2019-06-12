@@ -21,6 +21,8 @@ for hostname in ${!node[@]};
 ${node[${hostname}]} ${hostname}
 EOF
     done
+echo "${master[${gysl-master}]} ${hostname}">>/etc/hosts
+echo "Modify hosts file of node successfully. "
 read -p "Do you need init your system and install docker-engine?(Y/n)" affirm
 while true;
 do 
@@ -60,10 +62,11 @@ EOF
                 systemctl enable docker --now && systemctl status docker
                 if [ $? -eq 0 ]; 
                     then
-                    echo "Install successfully. " && break 2
+                    echo "Install and start docker.servie successfully. " && break 2
                 else
-                    echo "Install failed! Try again! "
+                    echo 'Install or start docker.service failed! Please try again! '
                     continue
+                fi
         done
     elif [[  "${affirm}"=='n' || "${affirm}"=='N' ]];
     then
@@ -72,7 +75,9 @@ EOF
     else
         echo 'Your input is wrong. Please check! '
         continue
+    fi
     done
 echo "Your system will reboot. "
 sleep 10
 reboot
+exit 0
