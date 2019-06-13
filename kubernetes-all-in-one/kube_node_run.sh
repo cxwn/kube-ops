@@ -21,7 +21,6 @@ for hostname in ${!node[@]};
 ${node[${hostname}]} ${hostname}
 EOF
     done
-echo "${master[${gysl-master}]} ${hostname}">>/etc/hosts
 echo "Modify hosts file of node successfully. "
 read -p "Do you need init your system and install docker-engine?(Y/n)" affirm
 while true;

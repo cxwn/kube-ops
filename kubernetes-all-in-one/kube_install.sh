@@ -33,8 +33,9 @@ EOF
 [ $? -eq 0 ] && cmp /etc/sysctl.d/docker.conf /etc/sysctl.d/temp.conf && [ $? -eq 0 ] && echo "Your system kernel parameters were configuration successfully. " && rm -f /etc/sysctl.d/temp.conf 
 [ $? -ne 0 ] && echo "Your kernel parameters failed. Please check." && exit 3
 
-# Ckeck firewalld.
+# Check firewalld.
 [ $(systemctl status firewalld|grep Loaded|awk -F ";" '{print $2}'|sed 's/\s//g') == 'disabled' ] && echo "Your firewalld was disabled."
 [ $? -ne 0] && echo "Your firewalld was not disabled. Please check again. " && exit 4
 [ $(systemctl status firewalld|grep Active|grep -o 'dead') != 'dead' ] && echo "Your firewalld was not inactive. Plaese check again. " && exit 4
 
+# Check docker-engine.
