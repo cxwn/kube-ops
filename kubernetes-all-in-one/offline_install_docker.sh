@@ -14,6 +14,13 @@
 #      REVISION: v1.0
 #===============================================================================
 
+cd ~
+mkdir {createrepo,docker}
+curl http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo>&/dev/null
+yum -y install --downloadonly --downloaddir=createrepo createrepo>&/dev/null
+yum -y install --downloadonly --downloaddir=docker docker-ce-18.06.2.ce-3.el7>&/dev/null
+tar -cvzf pkgs.tar.gz createrepo docker>&/dev/null
+
 while true;
 do
     read -p "Do you need init your system and install docker-engine?(Y/n)" affirm
@@ -38,9 +45,9 @@ EOF
 }
 EOF
 # Create a local repo_file.
-        [ -d temp ] && rm -rf temp && mkdir temp
-        [ ! -d temp ] && mkdir temp
-        mv /etc/yum.repos.d/* temp
+        [ -d repo ] && rm -rf repo && mkdir repo
+        [ ! -d repo ] && mkdir repo
+        mv /etc/yum.repos.d/* repo
         cat>/etc/yum.repos.d/docker-ce.repo<<EOF
 [docker]
 name=docker
@@ -56,7 +63,8 @@ EOF
         sed -i.bak 's/=enforcing/=disabled/' /etc/selinux/config
         echo "The system is initializing and installing docker-engine. Please waite a moment."
 # Install the createrepo.
-        for rp in `cat ${PWD}/createrepo_pkgs.txt`;
+        yum clean all
+        for rp in createrepo-0.9.9-28.el7.noarch.rpm  deltarpm-3.6-3.el7.x86_64.rpm  libxml2-python-2.9.1-6.el7_2.3.x86_64.rpm  python-deltarpm-3.6-3.el7.x86_64.rpm ;
         do
             rpm -Uvh ${PWD}/createrepo/${rp}
         done
@@ -71,7 +79,7 @@ EOF
                         continue
                 else
                         systemctl start docker>&/dev/null
-                        [ $? -eq 0 ] && echo "Install successfully. " && rm -f /etc/yum.repos.d/docker-ce.repo && mv temp/* /etc/yum.repos.d/ && break 2
+                        [ $? -eq 0 ] && echo "Install successfully. " && rm -f /etc/yum.repos.d/docker-ce.repo && mv repo/* /etc/yum.repos.d/ && break 2
                 fi
         done
     elif [[  "${affirm}" == 'N' || "${affirm}" == 'n' ]];
@@ -83,7 +91,6 @@ EOF
         continue
     fi
     done
-systemctl enable docker --now
-rm -rf temp docker createrepo_pkgs.txt docker_offline_install.tar.gz createrepo
+systemctl enable docker
+rm -rf repo docker createrepo pkgs.tar.gz
 reboot
-
