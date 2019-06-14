@@ -16,8 +16,8 @@
 
 cd ~
 mkdir {createrepo,docker}
-curl http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo>&/dev/null
-yum -y install --downloadonly --downloaddir=createrepo createrepo>&/dev/null
-yum -y install --downloadonly --downloaddir=docker docker-ce-18.06.2.ce-3.el7>&/dev/null
-tar -cvzf pkgs.tar.gz createrepo docker>&/dev/null
+curl http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo
+yum -y install --downloadonly --downloaddir=createrepo createrepo
+yum -y install --downloadonly --downloaddir=docker docker-ce-18.06.2.ce-3.el7
+tar -cvzf pkgs.tar.gz createrepo docker
 rm -rf createrepo docker
