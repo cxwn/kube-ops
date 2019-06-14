@@ -8,19 +8,13 @@
 #        WECHAT: ecsboy
 #      TECHBLOG: https://ivandu.blog.csdn.net
 #        GITHUB: https://github.com/mrivandu
-#       CREATED: 2019-06-13 18:26:03
+#       CREATED: 2019-06-13 18:27:05
 #       LICENSE: GNU General Public License.
 #     COPYRIGHT: © IVAN DU 2019
 #      REVISION: v1.0
 #===============================================================================
 
 cd ~
-mkdir {createrepo,docker}
-curl http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo>&/dev/null
-yum -y install --downloadonly --downloaddir=createrepo createrepo>&/dev/null
-yum -y install --downloadonly --downloaddir=docker docker-ce-18.06.2.ce-3.el7>&/dev/null
-tar -cvzf pkgs.tar.gz createrepo docker>&/dev/null
-
 while true;
 do
     read -p "Do you need init your system and install docker-engine?(Y/n)" affirm
@@ -48,6 +42,7 @@ EOF
         [ -d repo ] && rm -rf repo && mkdir repo
         [ ! -d repo ] && mkdir repo
         mv /etc/yum.repos.d/* repo
+        mkdir /var/docker
         cat>/etc/yum.repos.d/docker-ce.repo<<EOF
 [docker]
 name=docker
@@ -64,11 +59,14 @@ EOF
         echo "The system is initializing and installing docker-engine. Please waite a moment."
 # Install the createrepo.
         yum clean all
-        for rp in createrepo-0.9.9-28.el7.noarch.rpm  deltarpm-3.6-3.el7.x86_64.rpm  libxml2-python-2.9.1-6.el7_2.3.x86_64.rpm  python-deltarpm-3.6-3.el7.x86_64.rpm ;
+        tar -xvzf pkgs.tar.gz
+        mkdir ${PWD}/docker/i386
+        mv docker/* docker/i386
+        for rp in deltarpm-3.6-3.el7.x86_64.rpm  libxml2-python-2.9.1-6.el7_2.3.x86_64.rpm  python-deltarpm-3.6-3.el7.x86_64.rpm createrepo-0.9.9-28.el7.noarch.rpm ;
         do
             rpm -Uvh ${PWD}/createrepo/${rp}
         done
-        [ $? -eq 0 ] && createrepo  ${PWD}/docker
+        createrepo  ${PWD}/docker
         yum makecache
 # Install the docker engine.
         while true;
