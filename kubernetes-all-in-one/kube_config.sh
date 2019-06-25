@@ -15,11 +15,11 @@
 #===============================================================================
 
 declare -A master node etcd
-kube_version='v1.14.1'
+kube_version='v1.15.0'
 etcd_version='v3.3.13'
 flannel_version='v0.11.0'
 coredns_version='v1.5.0'
-docker_version='18.09.5-3.el7'
+docker_version='18.09.6-3.el7'
 hosts=( [gysl-master]='172.31.2.10' [gysl-node1]='172.31.2.11' [gysl-node2]='172.31.2.12' )
 etcd=( [etcd-master]='172.31.2.10' [etcd-01]='172.31.2.11' [etcd-02]='172.31.2.12' )
 kube_conf='/etc/kubernetes/conf.d'
