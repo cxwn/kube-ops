@@ -21,7 +21,7 @@ for hostname in ${!node[@]};
 ${node[${hostname}]} ${hostname}
 EOF
     done
-echo "Modify hosts file of node successfully. "
+# echo "Modify hosts file of node successfully. "
 read -p "Do you need init your system and install docker-engine?(Y/n)" affirm
 while true;
 do 
