@@ -14,6 +14,7 @@
 #      REVISION: v1.0
 #===============================================================================
 
+. kube_config.sh
 read -p "Do you need init your system and install docker-engine?(Y/n)" affirm
 while true;
 do 
@@ -87,4 +88,3 @@ sed -i.bak 's/^.*swap/#&/g' /etc/fstab
 
 # Reboot the machine.  
 reboot
-
