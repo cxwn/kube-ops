@@ -25,11 +25,11 @@ cp temp/cfssl-tools/* ${bin}/
 cp temp/kubernetes-v1.15.0-linux-amd64-1/* ${bin}/
 cp temp/etcd-v3.3.13-linux-amd64/{etcd,etcdctl} ${bin}/
 
+## Deploy the etcd cluster.
 . modules/create_etcd_ca.sh
 . modules/create_etcd_config.sh
-
-## Copy some files to node for deploying etcd cluster.
 . modules/init.sh
+
 for node_ip in ${etcd[@]}
   do  
     if [ "${node_ip}" != "${hosts[gysl-master]}" ] ; then
