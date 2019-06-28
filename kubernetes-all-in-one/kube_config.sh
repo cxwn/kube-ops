@@ -14,7 +14,7 @@
 #      REVISION: v1.0
 #===============================================================================
 
-declare -A master node etcd
+declare -A hosts node etcd
 kube_version='v1.15.0'
 etcd_version='v3.3.13'
 flannel_version='v0.11.0'
