@@ -22,6 +22,7 @@
 . modules/unzip_pkgs.sh
 
 # Copy the binary to the master destination diretory. 
+rm -rf ${bin}/*
 cp temp/cfssl-tools/* ${bin}/
 cp temp/kubernetes-v1.15.0-linux-amd64-1/* ${bin}/
 cp temp/etcd-v3.3.13-linux-amd64/{etcd,etcdctl} ${bin}/
