@@ -5,3 +5,5 @@
         sed -i.bak 's/=enforcing/=disabled/' /etc/selinux/config  
 # Disable the swap.  
         sed -i.bak 's/^.*swap/#&/g' /etc/fstab
+
+
