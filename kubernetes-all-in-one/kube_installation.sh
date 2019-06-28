@@ -17,6 +17,7 @@
 # cd kubernetes-all-in-one
 
 . kube_config.sh
+. modules/init.sh
 . modules/no_passwd_login.sh
 . modules/unzip_pkgs.sh
 
@@ -26,7 +27,6 @@ cp temp/kubernetes-v1.15.0-linux-amd64-1/* ${bin}/
 cp temp/etcd-v3.3.13-linux-amd64/{etcd,etcdctl} ${bin}/
 
 ## Deploy the etcd cluster.
-. modules/init.sh
 . modules/create_etcd_ca.sh
 . modules/create_etcd_config.sh
 
@@ -40,7 +40,7 @@ for node_ip in ${etcd[@]}
       for etcd_name in ${!etcd[@]}
         do
           if [ "${node_ip}" == "${etcd[${etcd_name}]}" ] ; then
-            sed -e "2s/etcd-master/${etcd_name}/g" -e "4,9s/${etcd['etcd-master']}/${node_ip}/g" ${etcd_conf}/etcd.conf>etcd.conf
+            ssh ${node_ip} sed -i -e "2s/etcd-master/${etcd_name}/g" -e "4,9s/${etcd['etcd-master']}/${node_ip}/g" ${etcd_conf}/etcd.conf
             scp -p ${etcd_conf}/etcd.conf root@${node_ip}:${etcd_conf}/etcd.conf
             ssh root@${node_ip} "systemctl daemon-reload && systemctl enable etcd.service --now && systemctl status etcd -l"
           fi
