@@ -18,7 +18,7 @@
 
 IP=$(grep -E "^IPADDR"  /etc/sysconfig/network-scripts/ifcfg-[!l][!o]*|awk -F "=" '{print $2}')
 
-# mkdir -p {${etcd},${etcd_ca},${kube_conf},${kube_ca}}
+mkdir -p {${etcd},${etcd_ca},${kube_conf},${kube_ca}}
 if [ ${hosts['gysl-master']} != ${IP} ];then
    mkdir -p ${flanneld_conf}
 fi
