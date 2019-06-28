@@ -14,9 +14,10 @@
 #      REVISION: v1.0
 #===============================================================================
 
-. ../kube_config.sh
+. .kube_config.sh
 
-cat>${EtcdCA}/ca-config.json<<EOF
+# Make CAs of etcd.
+cat>${etcd_ca}/ca-config.json<<EOF
 {
   "signing": {
     "default": {
@@ -37,7 +38,7 @@ cat>${EtcdCA}/ca-config.json<<EOF
 }
 EOF
 
-cat>${EtcdCA}/ca-csr.json<<EOF
+cat>${etcd_ca}/ca-csr.json<<EOF
 {
     "CN": "etcd CA",
     "key": {
@@ -54,14 +55,13 @@ cat>${EtcdCA}/ca-csr.json<<EOF
 }
 EOF
 
-cat>${EtcdCA}/server-csr.json<<EOF
+cat>${etcd_ca}/server-csr.json<<EOF
 {
     "CN": "etcd",
     "hosts": [
-    "${HostIP[gysl-master]}",
-    "${HostIP[gysl-node1]}",
-    "${HostIP[gysl-node2]}",
-    "${HostIP[gysl-node3]}"
+    "${hosts[gysl-master]}",
+    "${hosts[gysl-node1]}",
+    "${hosts[gysl-node2]}"
     ],
     "key": {
         "algo": "rsa",
@@ -77,7 +77,7 @@ cat>${EtcdCA}/server-csr.json<<EOF
 }
 EOF
 
-cd ${EtcdCA}
+cd ${etcd_ca}
 cfssl gencert -initca ca-csr.json | cfssljson -bare ca -
 cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=www server-csr.json | cfssljson -bare server
-
+cd -
