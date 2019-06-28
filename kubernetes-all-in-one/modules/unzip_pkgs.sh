@@ -14,8 +14,10 @@
 #      REVISION: v1.0
 #===============================================================================
 
-# Unzip packages. 
+# Unzip packages.
 [ -d temp ] && rm -rf temp && mkdir temp
 [ ! -d temp ] && mkdir temp
-tar -xvzf pkgs/*.gz -C temp/
-
+for pkg in `ls pkgs/*.tar.gz`;
+  do
+    tar -xvzf ${pkg} -C temp/
+  done
