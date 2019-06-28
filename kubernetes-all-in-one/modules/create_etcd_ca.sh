@@ -14,7 +14,7 @@
 #      REVISION: v1.0
 #===============================================================================
 
-. .kube_config.sh
+. ../kube_config.sh
 
 # Make CAs of etcd.
 cat>${etcd_ca}/ca-config.json<<EOF
