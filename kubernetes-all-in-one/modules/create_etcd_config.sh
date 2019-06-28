@@ -14,7 +14,7 @@
 #      REVISION: v1.0
 #===============================================================================
 
-. ../kube_config.sh
+. kube_config.sh
 
 ## The etcd configuration file.
 cat>${etcd_conf}/etcd.conf<<EOF

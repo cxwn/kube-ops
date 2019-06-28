@@ -14,7 +14,7 @@
 #      REVISION: v1.0
 #===============================================================================
 
-. ../kube_config.sh
+. kube_config.sh
 
 # Configure SSH Password-Free Login. 
 ssh-keygen -b 1024 -t rsa -C 'Kubernetes'

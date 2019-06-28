@@ -14,7 +14,7 @@
 #      REVISION: v1.0
 #===============================================================================
 
-. ../kube_config.sh
+. kube_config.sh
 
 # mkdir some directorys.
 mkdir -p {${etcd},${etcd_ca},${kube_conf},${kube_ca}}
