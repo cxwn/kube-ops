@@ -26,9 +26,9 @@ cp temp/kubernetes-v1.15.0-linux-amd64-1/* ${bin}/
 cp temp/etcd-v3.3.13-linux-amd64/{etcd,etcdctl} ${bin}/
 
 ## Deploy the etcd cluster.
+. modules/init.sh
 . modules/create_etcd_ca.sh
 . modules/create_etcd_config.sh
-. modules/init.sh
 
 for node_ip in ${etcd[@]}
   do  
