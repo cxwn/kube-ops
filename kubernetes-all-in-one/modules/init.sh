@@ -14,7 +14,7 @@
 #      REVISION: v1.0
 #===============================================================================
 
-. kube_config.sh
+. ../kube_config.sh
 
 IP=$(grep -E "^IPADDR"  /etc/sysconfig/network-scripts/ifcfg-[!l][!o]*|awk -F "=" '{print $2}')
 
