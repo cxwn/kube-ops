@@ -18,11 +18,6 @@
 
 . modules/no_passwd_login.sh
 
-# Unzip packages. 
-[ -d temp ] && rm -rf temp && mkdir temp
-[ ! -d temp ] && mkdir temp
-tar -xvzf pkgs/*.gz -C temp/
-
 # Copy the binary to the master destination diretory. 
 cp temp/cfssl-tools/* ${bin}/
 cp temp/kubernetes-v1.15.0-linux-amd64-1/* ${bin}/
