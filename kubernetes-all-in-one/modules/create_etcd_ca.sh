@@ -14,5 +14,70 @@
 #      REVISION: v1.0
 #===============================================================================
 
+. ../kube_config.sh
 
+cat>${EtcdCA}/ca-config.json<<EOF
+{
+  "signing": {
+    "default": {
+      "expiry": "87600h"
+    },
+    "profiles": {
+      "www": {
+         "expiry": "87600h",
+         "usages": [
+            "signing",
+            "key encipherment",
+            "server auth",
+            "client auth"
+        ]
+      }
+    }
+  }
+}
+EOF
+
+cat>${EtcdCA}/ca-csr.json<<EOF
+{
+    "CN": "etcd CA",
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "CN",
+            "L": "Beijing",
+            "ST": "Beijing"
+        }
+    ]
+}
+EOF
+
+cat>${EtcdCA}/server-csr.json<<EOF
+{
+    "CN": "etcd",
+    "hosts": [
+    "${HostIP[gysl-master]}",
+    "${HostIP[gysl-node1]}",
+    "${HostIP[gysl-node2]}",
+    "${HostIP[gysl-node3]}"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "CN",
+            "L": "Beijing",
+            "ST": "Beijing"
+        }
+    ]
+}
+EOF
+
+cd ${EtcdCA}
+cfssl gencert -initca ca-csr.json | cfssljson -bare ca -
+cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=www server-csr.json | cfssljson -bare server
 
