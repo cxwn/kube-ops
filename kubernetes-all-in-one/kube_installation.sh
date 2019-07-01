@@ -48,8 +48,7 @@ for node_ip in ${etcd[@]}
             ssh root@${node_ip} "systemctl daemon-reload && systemctl enable etcd.service --now && systemctl status etcd -l"
           fi
         done
-    else
-      systemctl daemon-reload && systemctl enable etcd.service --now && systemctl status etcd -l
     fi
   done
+systemctl daemon-reload && systemctl enable etcd.service --now && systemctl status etcd -l
 
