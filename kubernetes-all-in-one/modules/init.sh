@@ -23,18 +23,13 @@ done
 mkdir -p {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca}}
 
 # Add the hostnames.
+sed -i '3,$d' /etc/hosts
 for hostname in ${!hosts[@]}
   do
-    sed -i '3,$d' /etc/hosts
     cat>>/etc/hosts<<EOF
-${hosts[${hostname}]} ${hostname}
+${hosts["${hostname}"]} ${hostname}
 EOF
-  done
-
-for hostname in ${!hosts[@]}
-  do
-    if [ ${hosts['gysl-master']} != ${hosts[${hostname}]} ];then
+  if [ ${hosts['gysl-master']} != ${hosts[${hostname}]} ];then
     mkdir -p ${flanneld_conf}
-    break
   fi
   done

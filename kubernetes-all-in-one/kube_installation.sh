@@ -47,11 +47,12 @@ for node_ip in ${etcd[@]}
             ssh ${node_ip} "[ -f ${etcd_conf}/etcd.conf ] && rm -f ${etcd_conf}/etcd.conf"
             sed "2s/etcd-master/${etcd_name}/g" ${etcd_conf}/etcd.conf>temp/etcd.conf
             sed "4,9s/${etcd['etcd-master']}/${node_ip}/g" ${etcd_conf}/etcd.conf>temp/etcd.conf
-            scp -p temp/etcd.conf root@${node_ip}:${etcd_conf}/etcd.conf
+            scp temp/etcd.conf root@${node_ip}:${etcd_conf}/etcd.conf
             ssh root@${node_ip} "systemctl daemon-reload && systemctl enable etcd.service --now && systemctl status etcd -l"
           fi
         done
+    elif [ "${node_ip}" != "${hosts[gysl-master]}" ] ; then
+      systemctl daemon-reload && systemctl enable etcd.service --now && systemctl status etcd -l
     fi
   done
-systemctl daemon-reload && systemctl enable etcd.service --now && systemctl status etcd -l
 
