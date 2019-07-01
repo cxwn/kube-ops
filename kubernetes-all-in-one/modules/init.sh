@@ -30,5 +30,6 @@ ${hosts[${hostname}]} ${hostname}
 EOF
   if [ ${hosts['gysl-master']} != ${hosts[${hostname}]} ];then
     mkdir -p ${flanneld_conf}
+    continue
   fi
   done
