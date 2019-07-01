@@ -14,7 +14,7 @@
 #      REVISION: v1.0
 #===============================================================================
 
-exec kube_config.sh
+. kube_config.sh
 
 # mkdir some directorys.
 for dir in {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca}};do
