@@ -25,6 +25,7 @@ mkdir -p {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca}}
 # Add the hostnames.
 for hostname in ${!hosts[@]}
   do
+    sed -i '3,$d' /etc/hosts
     cat>>/etc/hosts<<EOF
 ${hosts[${hostname}]} ${hostname}
 EOF
