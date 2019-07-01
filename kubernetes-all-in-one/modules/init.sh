@@ -37,5 +37,4 @@ for hostname in ${!hosts[@]}
     mkdir -p ${flanneld_conf}
     break
   fi
-EOF
   done
