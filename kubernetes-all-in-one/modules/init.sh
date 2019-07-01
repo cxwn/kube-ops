@@ -29,8 +29,13 @@ for hostname in ${!hosts[@]}
     cat>>/etc/hosts<<EOF
 ${hosts[${hostname}]} ${hostname}
 EOF
-  if [ ${hosts['gysl-master']} != ${hosts[${hostname}]} ];then
+  done
+
+for hostname in ${!hosts[@]}
+  do
+    if [ ${hosts['gysl-master']} != ${hosts[${hostname}]} ];then
     mkdir -p ${flanneld_conf}
-    continue
+    break
   fi
+EOF
   done
