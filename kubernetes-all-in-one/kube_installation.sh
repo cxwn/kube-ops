@@ -48,6 +48,7 @@ for node_ip in ${etcd[@]}
             sed "2s/etcd-master/${etcd_name}/g" ${etcd_conf}/etcd.conf>temp/etcd.conf
             sed "4,9s/${etcd['etcd-master']}/${node_ip}/g" ${etcd_conf}/etcd.conf>temp/etcd.conf
             scp temp/etcd.conf root@${node_ip}:${etcd_conf}/etcd.conf
+            ssh ${node_ip} "rm -rf /var/lib/etcd/default.etcd/*"
             ssh root@${node_ip} "systemctl daemon-reload && systemctl enable etcd.service --now && systemctl status etcd -l"
           fi
         done
