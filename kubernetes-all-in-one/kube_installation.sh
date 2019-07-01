@@ -42,8 +42,8 @@ for node_ip in ${etcd[@]}
         do
           if [ "${node_ip}" == "${etcd[${etcd_name}]}" ] ; then
             ssh ${node_ip} [ -f ${etcd_conf}/etcd.conf ] && rm -f ${etcd_conf}/etcd.conf
-            scp -p ${etcd_conf}/etcd.conf root@${node_ip}:${etcd_conf}/etcd.conf
-            ssh ${node_ip} sed -i -e "2s/etcd-master/${etcd_name}/g" -e "4,9s/${etcd['etcd-master']}/${node_ip}/g" ${etcd_conf}/etcd.conf
+            sed -e "2s/etcd-master/${etcd_name}/g" -e "4,9s/${etcd['etcd-master']}/${node_ip}/g" ${etcd_conf}/etcd.conf>temp/etcd.conf
+            scp -p temp/etcd.conf root@${node_ip}:${etcd_conf}/etcd.conf
             ssh root@${node_ip} "systemctl daemon-reload && systemctl enable etcd.service --now && systemctl status etcd -l"
           fi
         done
