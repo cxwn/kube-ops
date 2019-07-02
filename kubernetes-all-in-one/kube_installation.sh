@@ -54,9 +54,9 @@ for node_ip in ${etcd[@]}
         done
     elif [ "${node_ip}" == "${hosts[gysl-master]}" ] ; then
       rm -rf /var/lib/etcd/default.etcd/*
-      systemctl daemon-reload && systemctl enable etcd.service --now && systemctl restart etcd.service && systemctl status etcd -l
     fi
   done
+systemctl daemon-reload && systemctl enable etcd.service --now && systemctl restart etcd.service && systemctl status etcd -l
 etcdctl \
 --ca-file=${etcd_ca}/ca.pem \
 --cert-file=${etcd_ca}/server.pem \
