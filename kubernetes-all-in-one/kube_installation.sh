@@ -62,7 +62,6 @@ etcdctl \
 --cert-file=${etcd_ca}/server.pem \
 --key-file=${etcd_ca}/server-key.pem \
 --endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" cluster-health
-
 if [ $? -eq 0 ];then
   echo "Etcd cluster has been successfully deployed. "
 else
@@ -70,3 +69,24 @@ else
   exit 1
 fi
 sleep 10
+
+# Deployment flanneld.
+. modules/create_flanneld_config
+
+cd ${etcd_ca}
+etcdctl \
+--ca-file=ca.pem --cert-file=server.pem --key-file=server-key.pem \
+--endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" \
+set /coreos.com/network/config  '{ "Network": "172.17.0.0/16", "Backend": {"Type": "vxlan"}}'
+cd -
+for node in ${!hosts[@]};
+ do
+   if [ "${node}" != "${hosts[gysl-master]}" ] ; then
+     scp temp/{flanneld,mk-docker-opts.sh} root@${node}:${bin}/
+     scp temp/flanneld.conf root@${node}:${flanneld_conf}/
+     scp temp/flanneld.service root@${node}:/usr/lib/systemd/system/etcd.service
+     # Modify the docker service.
+     ssh root@${node} "sed -i.bak -e '/ExecStart/i EnvironmentFile=\/run\/flannel\/subnet.env' -e 's/ExecStart=\/usr\/bin\/dockerd/ExecStart=\/usr\/bin\/dockerd $DOCKER_NETWORK_OPTIONS/g' /usr/lib/systemd/system/docker.service"
+     ssh root@${node} "systemctl daemon-reload && systemctl enable flanneld --now && systemctl restart docker && systemctl status flanneld && systemctl status docker"
+    fi
+  done
