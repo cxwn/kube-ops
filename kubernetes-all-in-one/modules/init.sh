@@ -17,9 +17,9 @@
 . kube_config.sh
 
 # mkdir some directorys.
-for dir in {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca},${flanneld_conf}};
+for dir in {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca},${bin}};
   do
-    [ -d ${dir} ] && rm -rf ${dir}
+    [ -d ${dir} ] && rm -rf ${dir}/*
     [ ! -d ${dir} ] && continue
   done
 mkdir -p {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca}}
@@ -32,6 +32,6 @@ for hostname in ${!hosts[@]}
 ${hosts["${hostname}"]} ${hostname}
 EOF
   if [ ${hosts['gysl-master']} != ${hosts[${hostname}]} ];then
-    mkdir -p ${flanneld_conf}
+    rm -rf ${flanneld_conf} && mkdir -p ${flanneld_conf}
   fi
   done
