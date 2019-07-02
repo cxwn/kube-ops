@@ -17,9 +17,11 @@
 . kube_config.sh
 
 # mkdir some directorys.
-for dir in {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca}};do
-[ -d ${dir} ] && rm -rf ${dir}
-done
+for dir in {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca},${flanneld_conf}};
+  do
+    [ -d ${dir} ] && rm -rf ${dir}
+    [ ! -d ${dir} ] && continue
+  done
 mkdir -p {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca}}
 
 # Add the hostnames.
