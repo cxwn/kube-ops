@@ -85,7 +85,7 @@ for node_ip in ${hosts[@]};
    if [ "${node_ip}" != "${hosts[gysl-master]}" ] ; then
      scp temp/{flanneld,mk-docker-opts.sh} root@${node_ip}:${bin}/
      scp temp/flanneld.conf root@${node_ip}:${flanneld_conf}/
-     scp temp/flanneld.service root@${node_ip}:/usr/lib/systemd/system/flannel.service
+     scp temp/flanneld.service root@${node_ip}:/usr/lib/systemd/system/flanneld.service
      # Modify the docker service.
      ssh root@${node_ip} "sed -i.bak_$(date +%d%H%M) '/ExecStart/i EnvironmentFile=\/run\/flannel\/subnet.env' /usr/lib/systemd/system/docker.service"
      ssh root@${node_ip} "sed -i 's#ExecStart=/usr/bin/dockerd#ExecStart=/usr/bin/dockerd \$DOCKER_NETWORK_OPTIONS#g' /usr/lib/systemd/system/docker.service"
