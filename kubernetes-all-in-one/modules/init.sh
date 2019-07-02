@@ -25,7 +25,11 @@ for dir in {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca},${bin}};
 mkdir -p {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca}}
 
 # Add the hostnames.
-sed -i '3,$d' /etc/hosts
+for node_ip in ${hosts[@]}
+  do
+    sed -i "/${node_ip}/d" /etc/hosts
+  done
+
 for hostname in ${!hosts[@]}
   do
     cat>>/etc/hosts<<EOF

@@ -64,7 +64,9 @@ etcdctl \
 --ca-file=${etcd_ca}/ca.pem \
 --cert-file=${etcd_ca}/server.pem \
 --key-file=${etcd_ca}/server-key.pem \
+# <--!
 --endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" cluster-health
+# --!>
 [ $? -eq 0 ] && sleep 20
 if [ $? -eq 0 ];then
   echo "Etcd cluster has been successfully deployed. "
@@ -90,7 +92,7 @@ for node_ip in ${hosts[@]};
      scp temp/flanneld.conf root@${node_ip}:${flanneld_conf}/
      scp temp/flanneld.service root@${node_ip}:/usr/lib/systemd/system/flanneld.service
      # Modify the docker service.
-     ssh root@${node_ip} "sed -i '/ExecStart/d' /usr/lib/systemd/system/docker.service"
+     ssh root@${node_ip} "sed -i '/EnvironmentFile/d' /usr/lib/systemd/system/docker.service"
      ssh root@${node_ip} "sed -i.bak_$(date +%d%H%M) '/ExecStart/i EnvironmentFile=\/run\/flannel\/subnet.env' /usr/lib/systemd/system/docker.service"
      ssh root@${node_ip} "sed -i 's#ExecStart=/usr/bin/dockerd -H#ExecStart=/usr/bin/dockerd \$DOCKER_NETWORK_OPTIONS -H#g' /usr/lib/systemd/system/docker.service"
      ssh root@${node_ip} "systemctl daemon-reload && systemctl enable flanneld --now && systemctl restart docker && systemctl status flanneld && systemctl status docker"
