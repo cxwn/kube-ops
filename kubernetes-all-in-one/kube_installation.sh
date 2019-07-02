@@ -64,9 +64,7 @@ etcdctl \
 --ca-file=${etcd_ca}/ca.pem \
 --cert-file=${etcd_ca}/server.pem \
 --key-file=${etcd_ca}/server-key.pem \
-# <--!
---endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" cluster-health
-# --!>
+--endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" cluster-health ## Note
 [ $? -eq 0 ] && sleep 20
 if [ $? -eq 0 ];then
   echo "Etcd cluster has been successfully deployed. "
