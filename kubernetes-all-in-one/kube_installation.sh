@@ -31,6 +31,7 @@ cp temp/etcd-v3.3.13-linux-amd64/{etcd,etcdctl} ${bin}/
 . modules/create_etcd_ca.sh
 . modules/create_etcd_config.sh
 
+pkill etcd
 for node_ip in ${etcd[@]}
   do  
     if [ "${node_ip}" != "${hosts[gysl-master]}" ] ; then
@@ -56,6 +57,7 @@ for node_ip in ${etcd[@]}
       rm -rf /var/lib/etcd/default.etcd/*
     fi
   done
+sleep 10
 systemctl daemon-reload && systemctl enable etcd.service --now && systemctl restart etcd.service && systemctl status etcd -l
 etcdctl \
 --ca-file=${etcd_ca}/ca.pem \
