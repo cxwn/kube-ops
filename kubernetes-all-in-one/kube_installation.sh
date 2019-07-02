@@ -79,14 +79,15 @@ etcdctl \
 --endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" \
 set /coreos.com/network/config  '{ "Network": "172.17.0.0/16", "Backend": {"Type": "vxlan"}}'
 cd -
-for node in ${!hosts[@]};
+for node_ip in ${hosts[@]};
  do
-   if [ "${node}" != "${hosts[gysl-master]}" ] ; then
-     scp temp/{flanneld,mk-docker-opts.sh} root@${hosts[${node}]}:${bin}/
-     scp temp/flanneld.conf root@${hosts[${node}]}:${flanneld_conf}/
-     scp temp/flanneld.service root@${hosts[${node}]}:/usr/lib/systemd/system/etcd.service
+   if [ "${node_ip}" != "${hosts[gysl-master]}" ] ; then
+     scp temp/{flanneld,mk-docker-opts.sh} root@${node_ip}:${bin}/
+     scp temp/flanneld.conf root@${node_ip}:${flanneld_conf}/
+     scp temp/flanneld.service root@${node_ip}:/usr/lib/systemd/system/etcd.service
      # Modify the docker service.
-     ssh root@${hosts[${node}]} "sed -i.bak -e '/ExecStart/i EnvironmentFile=\/run\/flannel\/subnet.env' -e 's/ExecStart=\/usr\/bin\/dockerd/ExecStart=\/usr\/bin\/dockerd $DOCKER_NETWORK_OPTIONS/g' /usr/lib/systemd/system/docker.service"
-     ssh root@${hosts[${node}]} "systemctl daemon-reload && systemctl enable flanneld --now && systemctl restart docker && systemctl status flanneld && systemctl status docker"
+     ssh root@${node_ip} "sed -i.bak_$(date +%d%H%M) '/ExecStart/i EnvironmentFile=\/run\/flannel\/subnet.env' /usr/lib/systemd/system/docker.service"
+     ssh root@${node_ip} "sed -i 's#ExecStart=/usr/bin/dockerd#ExecStart=/usr/bin/dockerd \$DOCKER_NETWORK_OPTIONS#g' /usr/lib/systemd/system/docker.service"
+     ssh root@${node_ip} "systemctl daemon-reload && systemctl enable flanneld --now && systemctl restart docker && systemctl status flanneld && systemctl status docker"
     fi
   done
