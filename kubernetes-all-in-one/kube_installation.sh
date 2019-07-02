@@ -57,4 +57,8 @@ for node_ip in ${etcd[@]}
       systemctl daemon-reload && systemctl enable etcd.service --now && systemctl status etcd -l
     fi
   done
-
+etcdctl \
+--ca-file=${etcd_ca}/ca.pem \
+--cert-file=${etcd_ca}/server.pem \
+--key-file=${etcd_ca}/server-key.pem \
+--endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" cluster-health
