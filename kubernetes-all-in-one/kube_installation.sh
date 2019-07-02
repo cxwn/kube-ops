@@ -46,7 +46,7 @@ for node_ip in ${etcd[@]}
           if [ "${node_ip}" == "${etcd[${etcd_name}]}" ] ; then
             ssh ${node_ip} "[ -f ${etcd_conf}/etcd.conf ] && rm -f ${etcd_conf}/etcd.conf"
             sed "/ETCD_NAME/{s/etcd-master/${etcd_name}/g}" ${etcd_conf}/etcd.conf>temp/etcd.conf
-            sed "4,9s/${etcd['etcd-master']}/${node_ip}/g" ${etcd_conf}/etcd.conf>temp/etcd.conf
+            sed -i "4,9s/${etcd['etcd-master']}/${node_ip}/g" temp/etcd.conf
             scp temp/etcd.conf root@${node_ip}:${etcd_conf}/etcd.conf
             ssh ${node_ip} "rm -rf /var/lib/etcd/default.etcd/*"
             ssh root@${node_ip} "systemctl daemon-reload && systemctl enable etcd.service --now && systemctl status etcd -l"
@@ -62,3 +62,11 @@ etcdctl \
 --cert-file=${etcd_ca}/server.pem \
 --key-file=${etcd_ca}/server-key.pem \
 --endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" cluster-health
+
+if [ $? -eq 0 ];then
+  echo "Etcd cluster has been successfully deployed. "
+else
+  echo "Etcd cluster has not been successfully deployed. Plaese check. "
+  exit 1
+fi
+sleep 10
