@@ -71,7 +71,7 @@ fi
 sleep 10
 
 # Deployment flanneld.
-. modules/create_flanneld_config
+. modules/create_flanneld_config.sh
 
 cd ${etcd_ca}
 etcdctl \
@@ -82,11 +82,11 @@ cd -
 for node in ${!hosts[@]};
  do
    if [ "${node}" != "${hosts[gysl-master]}" ] ; then
-     scp temp/{flanneld,mk-docker-opts.sh} root@${node}:${bin}/
-     scp temp/flanneld.conf root@${node}:${flanneld_conf}/
-     scp temp/flanneld.service root@${node}:/usr/lib/systemd/system/etcd.service
+     scp temp/{flanneld,mk-docker-opts.sh} root@${hosts[${node}]}:${bin}/
+     scp temp/flanneld.conf root@${hosts[${node}]}:${flanneld_conf}/
+     scp temp/flanneld.service root@${hosts[${node}]}:/usr/lib/systemd/system/etcd.service
      # Modify the docker service.
-     ssh root@${node} "sed -i.bak -e '/ExecStart/i EnvironmentFile=\/run\/flannel\/subnet.env' -e 's/ExecStart=\/usr\/bin\/dockerd/ExecStart=\/usr\/bin\/dockerd $DOCKER_NETWORK_OPTIONS/g' /usr/lib/systemd/system/docker.service"
-     ssh root@${node} "systemctl daemon-reload && systemctl enable flanneld --now && systemctl restart docker && systemctl status flanneld && systemctl status docker"
+     ssh root@${hosts[${node}]} "sed -i.bak -e '/ExecStart/i EnvironmentFile=\/run\/flannel\/subnet.env' -e 's/ExecStart=\/usr\/bin\/dockerd/ExecStart=\/usr\/bin\/dockerd $DOCKER_NETWORK_OPTIONS/g' /usr/lib/systemd/system/docker.service"
+     ssh root@${hosts[${node}]} "systemctl daemon-reload && systemctl enable flanneld --now && systemctl restart docker && systemctl status flanneld && systemctl status docker"
     fi
   done
