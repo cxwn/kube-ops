@@ -19,8 +19,6 @@
 . kube_config.sh
 . modules/init.sh
 . modules/no_passwd_login.sh
-
-[ -d temp ] && rm -rf temp
 . modules/unzip_pkgs.sh
 
 # Copy the binary to the master destination diretory. 
