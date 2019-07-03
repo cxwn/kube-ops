@@ -31,4 +31,4 @@ cp temp/etcd-v3.3.13-linux-amd64/{etcd,etcdctl} ${bin}/
 . etcd_cluster_installation.sh
 
 # Install the flnneld.
-. flnnel_installation.sh
+. flannel_installation.sh
