@@ -59,9 +59,9 @@ cat>${etcd_ca}/server-csr.json<<EOF
 {
     "CN": "etcd",
     "hosts": [
-    "${hosts[gysl-master]}",
-    "${hosts[gysl-node1]}",
-    "${hosts[gysl-node2]}"
+    "${etcd[etcd-master]}",
+    "${etcd[etcd-01]}",
+    "${etcd[etcd-02]}"
     ],
     "key": {
         "algo": "rsa",

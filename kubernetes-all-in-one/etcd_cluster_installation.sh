@@ -23,10 +23,9 @@ pkill etcd
 for node_ip in ${etcd[@]}
   do  
     if [ "${node_ip}" != "${hosts[gysl-master]}" ] ; then
-      pkill etcd
       scp kube_config.sh root@${node_ip}:/tmp/
       scp modules/init.sh root@${node_ip}:/tmp/
-      ssh root@${node_ip} "sed -i 's/^\./#&/g' /tmp/init.sh"
+      ssh root@${node_ip} "sed -i 's/^\./#&/g' /tmp/init.sh;pkill etcd"
       ssh root@${node_ip} ". /tmp/kube_config.sh && . /tmp/init.sh"
       scp -p ${etcd_ca}/{ca*pem,server*pem} root@${node_ip}:${etcd_ca}
       scp -p temp/etcd-v3.3.13-linux-amd64/{etcd,etcdctl} root@${node_ip}:${bin}/
