@@ -59,6 +59,7 @@ cat>${etcd_ca}/server-csr.json<<EOF
 {
     "CN": "etcd",
     "hosts": [
+    "127.0.0.1",
     "${etcd[etcd-master]}",
     "${etcd[etcd-01]}",
     "${etcd[etcd-02]}"
