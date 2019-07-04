@@ -20,7 +20,6 @@
 for dir in {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca},${bin}};
   do
     [ -d ${dir} ] && rm -rf ${dir}/*
-    [ ! -d ${dir} ] && continue
   done
 mkdir -p {${etcd_conf},${etcd_ca},${kube_conf},${kube_ca}}
 
@@ -35,7 +34,7 @@ for hostname in ${!hosts[@]}
     cat>>/etc/hosts<<EOF
 ${hosts["${hostname}"]} ${hostname}
 EOF
-  if [ ${hosts['gysl-master']} != ${hosts[${hostname}]} ];then
+  if [ ${hosts['gysl-master']} != ${hosts["${hostname}"]} ];then
     rm -rf ${flanneld_conf} && mkdir -p ${flanneld_conf}
   fi
   done
