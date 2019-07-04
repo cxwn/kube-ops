@@ -18,6 +18,7 @@
 
 # Configure SSH Password-Free Login.
 [ -f ~/.ssh/id_rsa ] && rm-f ~/.ssh/id_rsa && ssh-keygen -b 1024 -t rsa -C 'Kubernetes'
+[ ! -f ~/.ssh/id_rsa ] && ssh-keygen -b 1024 -t rsa -C 'Kubernetes'
 for node_ip in ${hosts[@]}
   do  
     if [ "${node_ip}" == "${hosts[gysl-master]}" ] ; then
