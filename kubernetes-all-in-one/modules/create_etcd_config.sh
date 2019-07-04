@@ -25,6 +25,7 @@ ETCD_LISTEN_PEER_URLS="https://${hosts[gysl-master]}:2380"
 ETCD_LISTEN_CLIENT_URLS="https://${hosts[gysl-master]}:2379"
 
 #[Clustering]
+ETCD_VERSION="v3"
 ETCD_INITIAL_ADVERTISE_PEER_URLS="https://${hosts[gysl-master]}:2380"
 ETCD_ADVERTISE_CLIENT_URLS="https://${hosts[gysl-master]}:2379"
 ETCD_INITIAL_CLUSTER="etcd-master=https://${hosts[gysl-master]}:2380,etcd-01=https://${hosts[gysl-node1]}:2380,etcd-02=https://${hosts[gysl-node2]}:2380"
@@ -46,6 +47,7 @@ EnvironmentFile=${etcd_conf}/etcd.conf
 ExecStart=${bin}/etcd \\
 --name=\${ETCD_NAME} \\
 --data-dir=\${ETCD_DATA_DIR} \\
+--experimental-enable-v2v3=\${ETCD_VERSION} \\
 --listen-peer-urls=\${ETCD_LISTEN_PEER_URLS} \\
 --listen-client-urls=\${ETCD_LISTEN_CLIENT_URLS},https://127.0.0.1:2379 \\
 --advertise-client-urls=\${ETCD_ADVERTISE_CLIENT_URLS} \\

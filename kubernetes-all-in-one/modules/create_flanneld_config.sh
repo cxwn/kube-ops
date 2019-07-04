@@ -17,8 +17,8 @@
 . kube_config.sh
 
 cat>temp/flanneld.conf<<EOF
-FLANNEL_OPTIONS="--etcd-endpoints=https://${etcd[etcd-master]}:2379,\\
-https://${etcd[etcd-01]}:2379,https://${etcd[etcd-02]}:2379,\\
+FLANNEL_OPTIONS="--etcd-endpoints=https://${etcd[etcd-master]}:2379,\
+https://${etcd[etcd-01]}:2379,https://${etcd[etcd-02]}:2379,\
 -etcd-cafile=${etcd_ca}/ca.pem -etcd-certfile=${etcd_ca}/server.pem -etcd-keyfile=${etcd_ca}/server-key.pem"
 EOF
 
@@ -33,7 +33,7 @@ Before=docker.service
 Type=notify
 EnvironmentFile=${flanneld_conf}/flanneld.conf
 ExecStart=${bin}/flanneld --ip-masq \$FLANNEL_OPTIONS
-ExecStartPost=${bin}/mk-docker-opts.sh -k DOCKER_NETWORK_OPTIONS -d /run/flannel/subnet.env
+ExecStartPost=${bin}/mk-docker-opts.sh -k DOCKER_NETWORK_OPTIONS -d /run/flanneld/subnet.env
 Restart=on-failure
 
 [Install]
