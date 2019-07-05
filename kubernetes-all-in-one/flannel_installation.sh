@@ -18,6 +18,14 @@
 . kube_config.sh
 . modules/create_flanneld_config.sh
 
+# Create flanneld directory.
+for flanneld_node in ${hosts[@]}
+  do
+   if [ ${flanneld_node} != ${hosts['gysl-master']} ];then
+     ssh root@${flanneld_node} "rm -rf ${flanneld_conf} && mkdir -p ${flanneld_conf}"
+   fi
+  done
+
 etcdctl \
 --ca-file=${etcd_ca}/ca.pem --cert-file=${etcd_ca}/server.pem --key-file=${etcd_ca}/server-key.pem \
 --endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" \
