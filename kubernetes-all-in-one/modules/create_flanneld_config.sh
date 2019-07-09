@@ -18,7 +18,7 @@
 
 cat>temp/flanneld.conf<<EOF
 FLANNEL_OPTIONS="--etcd-endpoints=https://${etcd[etcd-master]}:2379,\
-https://${etcd[etcd-01]}:2379,https://${etcd[etcd-02]}:2379,\
+https://${etcd[etcd-01]}:2379,https://${etcd[etcd-02]}:2379 \
 -etcd-cafile=${etcd_ca}/ca.pem -etcd-certfile=${etcd_ca}/server.pem -etcd-keyfile=${etcd_ca}/server-key.pem"
 EOF
 
