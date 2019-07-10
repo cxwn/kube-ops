@@ -22,5 +22,13 @@ cp temp/kubernetes-v1.15.0-linux-amd64-1/kube-apiserver ${bin}/
 . modules/create_kube_ca.sh
 . modules/create_kube_api_config.sh
 systemctl daemon-reload
-systemctl enable kube-apiserver.service --now
-systemctl status kube-apiserver.service
+systemctl enable kube-apiserver.service --now && systemctl status kube-apiserver.service
+
+[ $? -eq 0 ] && sleep 10
+
+if [ $? -eq 0 ];then
+  echo "Kube-apiserver deployed sucessfully. "
+else
+  echo "Kube-apiserver has not been deployed successfully. Plaese check. "
+  exit 3
+fi

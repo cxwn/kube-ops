@@ -32,3 +32,9 @@ cp temp/etcd-v3.3.13-linux-amd64/{etcd,etcdctl} ${bin}/
 
 # Install the flnneld.
 . flannel_installation.sh
+
+# Install the kube-apiserver. 
+. kube_api_installation.sh
+
+# Install the controller-manager.
+. kube_controller-manager.sh

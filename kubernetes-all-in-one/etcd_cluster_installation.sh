@@ -46,17 +46,18 @@ for node_ip in ${etcd[@]}
     fi
   done
 sleep 10
+
 systemctl daemon-reload && systemctl enable etcd.service --now && systemctl restart etcd.service && systemctl status etcd -l
 etcdctl \
 --ca-file=${etcd_ca}/ca.pem \
 --cert-file=${etcd_ca}/server.pem \
 --key-file=${etcd_ca}/server-key.pem \
 --endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" cluster-health ## Note
-[ $? -eq 0 ] && sleep 20
+
+[ $? -eq 0 ] && sleep 10
 if [ $? -eq 0 ];then
   echo "Etcd cluster has been deployed successfully. "
 else
   echo "Etcd cluster has not been deployed successfully. Plaese check. "
   exit 1
 fi
-sleep 10
