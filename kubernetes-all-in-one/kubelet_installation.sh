@@ -27,8 +27,10 @@ for kube_node_ip in ${hosts[@]};
      ssh root@${kube_node_ip} "sed -i \"s/kube_node_ip/${kube_node_ip}/g\" ${kube_conf}/kubelet.yaml"
      ssh root@${kube_node_ip} "sed -i \"s/kube_node_ip/${kube_node_ip}/g\" ${kube_conf}/kubelet.conf"
      ssh root@${kube_node_ip} "pkill kubelet"
+     ssh root@${kube_node_ip} "systemctl daemon-reload && systemctl enable kubelet.service --now && systemctl status kubelet.service -l"
     fi
   done
+
 [ $? -eq 0 ] && sleep 10
 
 if [ $? -eq 0 ];then
