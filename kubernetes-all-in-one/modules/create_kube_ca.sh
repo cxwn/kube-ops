@@ -112,5 +112,3 @@ EOF
 cfssl_linux-amd64 gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-proxy-csr.json | cfssljson_linux-amd64 -bare kube-proxy
 ls *.pem
 cd -
-
-
