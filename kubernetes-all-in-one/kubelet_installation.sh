@@ -27,6 +27,7 @@ for kubelet_ip in ${hosts[@]};
      ssh root@${kubelet_ip} "sed -i \"s/kubelet-ip/${kubelet_ip}/g\" ${kube_conf}/kubelet.yaml"
      ssh root@${kubelet_ip} "sed -i \"s/kubelet-ip/${kubelet_ip}/g\" ${kube_conf}/kubelet.conf"
      ssh root@${kubelet_ip} "pkill kubelet"
+     ssh root@${kubelet_ip} "docker pull registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0"
      ssh root@${kubelet_ip} "systemctl daemon-reload && systemctl enable kubelet.service --now && systemctl status kubelet.service -l"
     fi
   done

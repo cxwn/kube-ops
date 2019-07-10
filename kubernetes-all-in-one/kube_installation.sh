@@ -47,3 +47,8 @@ cp temp/kubernetes-v1.15.0-linux-amd64-1/kubectl ${bin}/
 
 # Kubeconfig.
 . modules/create_kubeconfig.sh
+
+
+systemctl restart kube-apiserver kube-controller-manager kube-scheduler
+
+systemctl restart kubelet kube-proxy
