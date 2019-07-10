@@ -54,9 +54,9 @@ etcdctl \
 --endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" cluster-health ## Note
 [ $? -eq 0 ] && sleep 20
 if [ $? -eq 0 ];then
-  echo "Etcd cluster has been successfully deployed. "
+  echo "Etcd cluster has been deployed successfully. "
 else
-  echo "Etcd cluster has not been successfully deployed. Plaese check. "
+  echo "Etcd cluster has not been deployed successfully. Plaese check. "
   exit 1
 fi
 sleep 10
