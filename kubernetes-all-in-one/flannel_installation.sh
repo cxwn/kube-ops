@@ -26,13 +26,22 @@ for flanneld_node in ${hosts[@]}
    fi
   done
 
+# Set subnet.
 etcdctl \
 --ca-file=${etcd_ca}/ca.pem --cert-file=${etcd_ca}/server.pem --key-file=${etcd_ca}/server-key.pem \
 --endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" \
 set /coreos.com/network/config  '{ "Network": "172.20.0.0/16", "Backend": {"Type": "vxlan"}}'
+
+# Check the subnet configuration.
+etcdctl \
+--ca-file=${etcd_ca}/ca.pem --cert-file=${etcd_ca}/server.pem \
+--key-file=${etcd_ca}/server-key.pem --endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" \
+get /coreos.com/network/config
+
 for node_ip in ${hosts[@]};
- do
+ do 
    if [ "${node_ip}" != "${hosts[gysl-master]}" ] ; then
+     ssh root@${node_ip} "rm -f ${bin}/{flanneld,mk-docker-opts.sh}"
      scp temp/{flanneld,mk-docker-opts.sh} root@${node_ip}:${bin}/
      scp temp/flanneld.conf root@${node_ip}:${flanneld_conf}/
      scp temp/flanneld.service root@${node_ip}:/usr/lib/systemd/system/flanneld.service
