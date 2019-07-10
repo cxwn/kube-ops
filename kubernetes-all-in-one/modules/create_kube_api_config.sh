@@ -36,13 +36,13 @@ KUBE_APISERVER_OPTS="--logtostderr=true \
 --enable-bootstrap-token-auth \
 --token-auth-file=${kube_ca}/token.csv \
 --service-node-port-range=30000-50000 \
---tls-cert-file=${etcd_ca}/server.pem  \
---tls-private-key-file=${etcd_ca}/server-key.pem \
---client-ca-file=${etcd_ca}/ca.pem \
---service-account-key-file=${etcd_ca}/ca-key.pem \
---etcd-cafile=${kube_ca}/ca.pem \
---etcd-certfile=${kube_ca}/server.pem \
---etcd-keyfile=${kube_ca}/server-key.pem"
+--tls-cert-file=${kube_ca}/server.pem  \
+--tls-private-key-file=${kube_ca}/server-key.pem \
+--client-ca-file=${kube_ca}/ca.pem \
+--service-account-key-file=${kube_ca}/ca-key.pem \
+--etcd-cafile=${etcd_ca}/ca.pem \
+--etcd-certfile=${etcd_ca}/server.pem \
+--etcd-keyfile=${etcd_ca}/server-key.pem"
 EOF
 
 # Create the kube-apiserver service.
