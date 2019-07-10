@@ -30,7 +30,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 
 [Service]
 EnvironmentFile=-${kube_conf}/kube-scheduler.conf
-ExecStart=/usr/local/bin/kube-scheduler \$KUBE_SCHEDULER_OPTS
+ExecStart=${bin}/kube-scheduler \$KUBE_SCHEDULER_OPTS
 Restart=on-failure
 
 [Install]
