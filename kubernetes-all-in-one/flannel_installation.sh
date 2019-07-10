@@ -54,3 +54,11 @@ for node_ip in ${hosts[@]};
      ssh root@${node_ip} "systemctl daemon-reload && systemctl enable flanneld --now && systemctl restart docker && systemctl status flanneld && systemctl status docker"
     fi
   done
+[ $? -eq 0 ] && sleep 20
+if [ $? -eq 0 ];then
+  echo "Flanneld deployed sucessfully. "
+else
+  echo "Flanneld has not been deployed successfully. Plaese check. "
+  exit 2
+fi
+sleep 10
