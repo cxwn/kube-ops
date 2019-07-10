@@ -36,5 +36,9 @@ cp temp/etcd-v3.3.13-linux-amd64/{etcd,etcdctl} ${bin}/
 # Install the kube-apiserver. 
 . kube_api_installation.sh
 
-# Install the controller-manager.
+# Install the kube-controller-manager.
 . kube_controller-manager.sh
+
+# Install the kube-scheduler.
+. kube_scheduler_installation.sh
+
