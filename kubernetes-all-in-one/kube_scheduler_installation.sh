@@ -20,6 +20,7 @@
 cp temp/kubernetes-v1.15.0-linux-amd64-1/kube-scheduler ${bin}/
 
 . modules/create_kube_scheduler_config.sh
+pkill kube-scheduler
 
 systemctl daemon-reload
 systemctl enable kube-scheduler.service --now && systemctl status kube-scheduler.service

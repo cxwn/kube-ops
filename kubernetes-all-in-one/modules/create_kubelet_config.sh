@@ -16,25 +16,43 @@
 
 . kube_config.sh
 
-# Create the scheduler service.
-cat>${kube_conf}/kube-scheduler.conf<<EOF
-KUBE_SCHEDULER_OPTS="--logtostderr=true \
---v=4 \
---master=127.0.0.1:8080 \
---leader-elect"
+cat>temp/kubelet.yaml<<EOF
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+address: kube_node_ip
+port: 10250
+readOnlyPort: 10255
+cgroupDriver: cgroupfs
+clusterDNS: ["10.0.0.2"]
+clusterDomain: cluster.local.
+failSwapOn: false
+authentication:
+  anonymous:
+    enabled: true
 EOF
 
-cat>/usr/lib/systemd/system/kube-scheduler.service<<EOF
+cat>temp/kubelet.conf<<EOF
+KUBELET_OPTS="--logtostderr=true \
+--v=4 \
+--hostname-override=$IP \
+--kubeconfig=${kube_conf}/kubelet.kubeconfig \
+--bootstrap-kubeconfig=${kube_conf}/bootstrap.kubeconfig \
+--config=${kube_conf}/kubelet.yaml \
+--cert-dir=${kube_ca} \
+--pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0"
+EOF
+cat>temp/kubelet.service<<EOF
 [Unit]
-Description=Kubernetes Scheduler
-Documentation=https://github.com/kubernetes/kubernetes
+Description=Kubernetes Kubelet
+After=docker.service
+Requires=docker.service
 
 [Service]
-EnvironmentFile=-${kube_conf}/kube-scheduler.conf
-ExecStart=${bin}/kube-scheduler \$KUBE_SCHEDULER_OPTS
+EnvironmentFile=${kube_conf}/kubelet.conf
+ExecStart=${bin}/kubelet \$KUBELET_OPTS
 Restart=on-failure
+KillMode=process
 
 [Install]
 WantedBy=multi-user.target
 EOF
-

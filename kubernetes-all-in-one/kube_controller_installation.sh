@@ -20,6 +20,7 @@
 cp temp/kubernetes-v1.15.0-linux-amd64-1/kube-controller-manager ${bin}/
 
 . modules/create_kube_controller_config.sh
+pkill kube-controller-manager
 systemctl daemon-reload
 systemctl enable kube-controller-manager.service --now && systemctl status kube-controller-manager.service
 
