@@ -18,7 +18,7 @@
 cat>temp/kube-proxy.conf<<EOF
 KUBE_PROXY_OPTS="--logtostderr=true \
 --v=4 \
---hostname-override=$IP \
+--hostname-override=kube-proxy-ip \
 --cluster-cidr=10.0.0.0/24 \
 --kubeconfig=${kube_conf}/kube-proxy.kubeconfig"
 EOF
