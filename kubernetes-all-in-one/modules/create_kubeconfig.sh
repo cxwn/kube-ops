@@ -18,6 +18,7 @@
 BOOTSTRAP_TOKEN=`awk -F "," '{print $1}' ${kube_ca}/token.csv`
 
 cd ${kube_ca}
+# cp temp/kubernetes-v1.15.0-linux-amd64-1/kubectl ${bin}
 # Set cluster parameters.
 kubectl config set-cluster kubernetes \
   --certificate-authority=./ca.pem \
