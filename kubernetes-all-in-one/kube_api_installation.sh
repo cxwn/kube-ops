@@ -19,8 +19,8 @@
 [ -f ${bin}/kube-apiserver ] && rm -f ${bin}/kube-apiserver
 cp temp/kubernetes-v1.15.0-linux-amd64-1/kube-apiserver ${bin}/
 
-. modules/kube_ca.sh
-. modules/kube_api_config.sh
+. modules/create_kube_ca.sh
+. modules/create_kube_api_config.sh
 systemctl daemon-reload
 systemctl enable kube-apiserver.service --now
 systemctl status kube-apiserver.service
