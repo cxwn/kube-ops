@@ -24,7 +24,7 @@ for kube_proxy_ip in ${hosts[@]};
      scp temp/kube-proxy.conf root@${kube_proxy_ip}:${kube_conf}/
      scp temp/kube-proxy.service root@${kube_proxy_ip}:/usr/lib/systemd/system/kube-proxy.service
      scp ${kube_ca}/kube-proxy.kubeconfig root@${kube_proxy_ip}:${kube_conf}/
-     ssh root@${kube_proxy_ip} "sed -i \"s/kube_proxy_ip/${kube_proxy_ip}/g\" ${kube_conf}/kube-proxy.conf"
+     ssh root@${kube_proxy_ip} "sed -i \"s/kube-proxy-ip/${kube_proxy_ip}/g\" ${kube_conf}/kube-proxy.conf"
      ssh root@${kube_proxy_ip} "pkill kube-proxy"
      ssh root@${kube_proxy_ip} "systemctl daemon-reload && systemctl enable kube-proxy.service --now && systemctl status kube-proxy.service -l"
     fi

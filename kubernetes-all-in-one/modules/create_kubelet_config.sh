@@ -19,7 +19,7 @@
 cat>temp/kubelet.yaml<<EOF
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
-address: kubelet_ip
+address: kubelet-ip
 port: 10250
 readOnlyPort: 10255
 cgroupDriver: cgroupfs
