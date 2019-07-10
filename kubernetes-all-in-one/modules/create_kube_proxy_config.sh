@@ -1,5 +1,20 @@
 #!/bin/bash
+#===============================================================================
+#          FILE: create_kube_scheduler_config.sh
+#         USAGE: . ${YOUR_PATH}/create_kube_scheduler_config.sh
+#   DESCRIPTION: 
+#        AUTHOR: IVAN DU
+#        E-MAIL: mrivandu@hotmail.com
+#        WECHAT: ecsboy
+#      TECHBLOG: https://ivandu.blog.csdn.net
+#        GITHUB: https://github.com/mrivandu
+#       CREATED: 2019-07-04 11:03:52
+#       LICENSE: GNU General Public License.
+#     COPYRIGHT: © IVAN DU 2019
+#      REVISION: v1.0
+#===============================================================================
 
+. kube_config.sh
 cat>temp/kube-proxy.conf<<EOF
 KUBE_PROXY_OPTS="--logtostderr=true \
 --v=4 \
@@ -20,10 +35,7 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl daemon-reload
-systemctl enable kube-proxy.service --now
-sleep 20
-systemctl status kube-proxy.service -l
+
 
 
 

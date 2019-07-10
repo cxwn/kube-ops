@@ -1,7 +1,7 @@
 #!/bin/bash
 #===============================================================================
-#          FILE: create_kube_scheduler_config.sh
-#         USAGE: . ${YOUR_PATH}/create_kube_scheduler_config.sh
+#          FILE: create_kubelet_config.sh
+#         USAGE: . ${YOUR_PATH}/create_kubelet_config.sh
 #   DESCRIPTION: 
 #        AUTHOR: IVAN DU
 #        E-MAIL: mrivandu@hotmail.com
@@ -19,7 +19,7 @@
 cat>temp/kubelet.yaml<<EOF
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
-address: kube_node_ip
+address: kubelet_ip
 port: 10250
 readOnlyPort: 10255
 cgroupDriver: cgroupfs
@@ -34,7 +34,7 @@ EOF
 cat>temp/kubelet.conf<<EOF
 KUBELET_OPTS="--logtostderr=true \
 --v=4 \
---hostname-override=kube_node_ip \
+--hostname-override=kubelet_ip \
 --kubeconfig=${kube_conf}/kubelet.kubeconfig \
 --bootstrap-kubeconfig=${kube_conf}/bootstrap.kubeconfig \
 --config=${kube_conf}/kubelet.yaml \
