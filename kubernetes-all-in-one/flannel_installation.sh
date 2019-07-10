@@ -38,6 +38,7 @@ for node_ip in ${hosts[@]};
      scp temp/flanneld.service root@${node_ip}:/usr/lib/systemd/system/flanneld.service
      ssh root@${node_ip} "pkill flanneld"
      # Modify the docker service.
+     ssh root@${node_ip} "[ -f /run/flannel/subnet.env ] && rm -f /run/flannel/subnet.env"
      ssh root@${node_ip} "sed -i '/EnvironmentFile/d' /usr/lib/systemd/system/docker.service"
      ssh root@${node_ip} "sed -i.bak_$(date +%d%H%M) '/ExecStart/i EnvironmentFile=\/run\/flannel\/subnet.env' /usr/lib/systemd/system/docker.service"
      ssh root@${node_ip} "sed -i 's#ExecStart=/usr/bin/dockerd -H#ExecStart=/usr/bin/dockerd \$DOCKER_NETWORK_OPTIONS -H#g' /usr/lib/systemd/system/docker.service"
