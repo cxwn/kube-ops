@@ -22,7 +22,7 @@ $(head -c 16 /dev/urandom | od -An -t x | tr -d ' '),kubelet-bootstrap,10001,"sy
 EOF
 
 # Create a kube-apiserver configuration file.
-cat >${kube_conf}<<EOF
+cat >${kube_conf}/api-server.conf<<EOF
 KUBE_APISERVER_OPTS="--logtostderr=true \
 --v=4 \
 --etcd-servers=https://${hosts[gysl-master]}:2379,https://${hosts[gysl-node1]}:2379,https://${hosts[gysl-node2]}:2379 \
@@ -54,7 +54,7 @@ After=etcd.service
 Wants=etcd.service
 
 [Service]
-EnvironmentFile=-${kube_conf}
+EnvironmentFile=-${kube_conf}/api-server.conf
 ExecStart=${bin}/kube-apiserver \$KUBE_APISERVER_OPTS
 Restart=on-failure
 
