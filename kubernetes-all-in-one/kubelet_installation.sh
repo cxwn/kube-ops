@@ -15,6 +15,7 @@
 #===============================================================================
 
 . kube_config.sh
+. modules/create_kubelet_config.sh
 
 for kube_node_ip in ${hosts[@]};
  do 
