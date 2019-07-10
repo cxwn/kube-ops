@@ -34,7 +34,7 @@ EOF
 cat>temp/kubelet.conf<<EOF
 KUBELET_OPTS="--logtostderr=true \
 --v=4 \
---hostname-override=$IP \
+--hostname-override=kube_node_ip \
 --kubeconfig=${kube_conf}/kubelet.kubeconfig \
 --bootstrap-kubeconfig=${kube_conf}/bootstrap.kubeconfig \
 --config=${kube_conf}/kubelet.yaml \
