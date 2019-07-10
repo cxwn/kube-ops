@@ -42,3 +42,5 @@ cp temp/etcd-v3.3.13-linux-amd64/{etcd,etcdctl} ${bin}/
 # Install the kube-scheduler.
 . kube_scheduler_installation.sh
 
+# Copy the kubectl to bin. 
+cp temp/kubernetes-v1.15.0-linux-amd64-1/kubectl ${bin}/
