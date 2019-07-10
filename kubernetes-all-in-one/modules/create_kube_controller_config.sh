@@ -26,10 +26,10 @@ KUBE_CONTROLLER_MANAGER_OPTS="--logtostderr=true \
 --address=127.0.0.1 \
 --service-cluster-ip-range=10.0.0.0/24 \
 --cluster-name=kubernetes \
---cluster-signing-cert-file=${etcd_ca}/ca.pem \
---cluster-signing-key-file=${etcd_ca}/ca-key.pem  \
---root-ca-file=${etcd_ca}/ca.pem \
---service-account-private-key-file=${etcd_ca}/ca-key.pem"
+--cluster-signing-cert-file=${kube_ca}/ca.pem \
+--cluster-signing-key-file=${kube_ca}/ca-key.pem  \
+--root-ca-file=${kube_ca}/ca.pem \
+--service-account-private-key-file=${kube_ca}/ca-key.pem"
 EOF
 
 cat>/usr/lib/systemd/system/kube-controller-manager.service<<EOF
