@@ -30,7 +30,7 @@ for flanneld_node in ${hosts[@]}
 etcdctl \
 --ca-file=${etcd_ca}/ca.pem --cert-file=${etcd_ca}/server.pem --key-file=${etcd_ca}/server-key.pem \
 --endpoints="https://${etcd['etcd-master']}:2379,https://${etcd['etcd-01']}:2379,https://${etcd['etcd-02']}:2379" \
-set /coreos.com/network/config  '{ "Network": "172.20.0.0/16", "Backend": {"Type": "vxlan"}}'
+set /coreos.com/network/config  '{ "Network": "172.20.0.0/16", "Backend": {"Type": "vxlan"}}'>&/dev/null
 
 # Check the subnet configuration.
 etcdctl \
