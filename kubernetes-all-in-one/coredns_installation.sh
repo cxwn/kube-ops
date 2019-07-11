@@ -14,7 +14,12 @@
 #      REVISION: v1.0
 #===============================================================================
 
-yum -y install epel-release
-yum -y install jq
-kubectl delete --namespace=kube-system deployment kube-dns>&/dev/null
+yum -y install epel-release>&/dev/null
+yum -y install jq>&/dev/null
+kubectl delete serviceaccount coredns>&/dev/null
+kubectl delete clusterrole.rbac.authorization.k8s.io system:coredns --namespace=kube-system>&/dev/null
+kubectl delete clusterrolebinding.rbac.authorization.k8s.io system:coredns --namespace=kube-system>&/dev/null
+kubectl delete configmap coredns --namespace=kube-system>&/dev/null
+kubectl delete deployment.apps coredns --namespace=kube-system>&/dev/null
+kubectl delete service kube-dns --namespace=kube-system>&/dev/null
 bash modules/deploy_coredns.sh -r 10.0.0.0/24 -i 10.0.0.2 -d cluster.local. -t modules/coredns.yaml | kubectl apply -f -
