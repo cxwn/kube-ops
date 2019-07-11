@@ -23,7 +23,7 @@ cd ${kube_ca}
 kubectl config set-cluster kubernetes \
   --certificate-authority=./ca.pem \
   --embed-certs=true \
-  --server=${hosts[gysl-master]}:6443 \
+  --server=https://${hosts[gysl-master]}:6443 \
   --kubeconfig=bootstrap.kubeconfig
 
 # Set client parameters.
@@ -44,7 +44,7 @@ kubectl config use-context default --kubeconfig=bootstrap.kubeconfig
 kubectl config set-cluster kubernetes \
   --certificate-authority=./ca.pem \
   --embed-certs=true \
-  --server=${hosts[gysl-master]}:6443 \
+  --server=https://${hosts[gysl-master]}:6443 \
   --kubeconfig=kube-proxy.kubeconfig
 
 kubectl config set-credentials kube-proxy \
