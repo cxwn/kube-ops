@@ -14,5 +14,7 @@
 #      REVISION: v1.0
 #===============================================================================
 
+yum -y install epel-release
+yum -y install jq
 kubectl delete --namespace=kube-system deployment kube-dns>&/dev/null
 bash modules/deploy_coredns.sh -r 10.0.0.0/24 -i 10.0.0.2 -d cluster.local. -t modules/coredns.yaml | kubectl apply -f -
