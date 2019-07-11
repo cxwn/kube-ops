@@ -4,3 +4,4 @@
 2. [etcd](https://github.com/etcd-io/etcd/releases/tag/v3.3.13)
 3. [flannel](https://github.com/coreos/flannel/releases)
 4. [cfssl](http://pkg.cfssl.org)
+5. [CoreDNS](https://github.com/coredns/coredns/releases/tag/v1.5.2)
