@@ -48,7 +48,12 @@ cp temp/kubernetes-v1.15.0-linux-amd64-1/kubectl ${bin}/
 # Kubeconfig.
 . modules/create_kubeconfig.sh
 
+. modules/last_config.sh
+. coredns_installation.sh
 
-systemctl restart kube-apiserver kube-controller-manager kube-scheduler
+# Create a ClusterRoleBinding for kubectl exec command.
+kubectl create clusterrolebinding me-cluster-admin --clusterrole=cluster-admin --user=system:anonymous
 
-systemctl restart kubelet kube-proxy
+# systemctl restart kube-apiserver kube-controller-manager kube-scheduler
+
+# systemctl restart kubelet kube-proxy
