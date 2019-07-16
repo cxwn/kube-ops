@@ -24,8 +24,9 @@ kubectl delete deployment.apps coredns --namespace=kube-system>&/dev/null
 kubectl delete service kube-dns --namespace=kube-system>&/dev/null
 bash modules/deploy_coredns.sh -r 10.0.0.0/24 -i 10.0.0.2 -d cluster.local. -t modules/coredns.yaml | kubectl apply -f -
 
-# If you deploy successfully. You can see these:
-#nslookup www.baidu.com
+# If you deploy successfully. You can enter a container and you will see these:
+# kubectl exec -it dns-tets-tools-6bf6db5c4f-nnp9p sh
+# nslookup www.baidu.com
 # Server:    10.0.0.2
 # Address 1: 10.0.0.2 kube-dns.kube-system.svc.cluster.local
 # Name:      www.baidu.com
