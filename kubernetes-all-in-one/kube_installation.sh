@@ -54,6 +54,13 @@ cp temp/kubernetes-v1.15.0-linux-amd64-1/kubectl ${bin}/
 # Create a ClusterRoleBinding for kubectl exec command.
 kubectl create clusterrolebinding exec-command --clusterrole=cluster-admin --user=system:anonymous
 
-# systemctl restart kube-apiserver kube-controller-manager kube-scheduler
+# Restart the services.
+systemctl restart etcd kube-apiserver kube-controller-manager kube-scheduler
 
-# systemctl restart kubelet kube-proxy
+# Restart the services of every node.
+for service_ip in ${hosts[@]};
+  do 
+    if [ "${service_ip}" != "${hosts[gysl-master]}" ] ; then
+      ssh root@${service_ip} "systemctl restart etcd flanneld kubelet kube-proxy"
+    fi
+  done
