@@ -17,7 +17,7 @@ exit 0
 
 # Simple Defaults
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-CLUSTER_DOMAIN=cluster.local
+CLUSTER_DOMAIN=cluster.local.
 YAML_TEMPLATE="$DIR/coredns.yaml.sed"
 STUBDOMAINS=""
 UPSTREAM=\\/etc\\/resolv\.conf
