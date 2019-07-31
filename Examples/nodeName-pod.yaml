@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: gysl-nodename
-spec:
-  nodeName: 172.31.2.12
-  containers:
-  - name: gysl-nginx
-    image: nginx
