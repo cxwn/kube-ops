@@ -22,7 +22,7 @@ kubectl delete clusterrolebinding.rbac.authorization.k8s.io system:coredns --nam
 kubectl delete configmap coredns --namespace=kube-system>&/dev/null
 kubectl delete deployment.apps coredns --namespace=kube-system>&/dev/null
 kubectl delete service kube-dns --namespace=kube-system>&/dev/null
-bash modules/deploy_coredns.sh -r 10.0.0.0/24 -i 10.0.0.2 -d cluster.local. -t modules/coredns.yaml | kubectl apply -f -
+bash modules/deploy_coredns.sh -r 10.0.0.0/24 -i 10.0.0.2 -d cluster.local -t modules/coredns.yaml | kubectl apply -f -
 
 # If you deploy successfully. You can enter a container and you will see these:
 # kubectl exec -it dns-tets-tools-6bf6db5c4f-nnp9p sh
@@ -32,3 +32,4 @@ bash modules/deploy_coredns.sh -r 10.0.0.0/24 -i 10.0.0.2 -d cluster.local. -t m
 # Name:      www.baidu.com
 # Address 1: 182.61.200.6
 # Address 2: 182.61.200.7
+# Some documents: https://github.com/kubernetes/dns/blob/master/docs/specification.md

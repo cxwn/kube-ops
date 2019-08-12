@@ -17,7 +17,7 @@ exit 0
 
 # Simple Defaults
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-CLUSTER_DOMAIN=cluster.local.
+CLUSTER_DOMAIN=cluster.local
 YAML_TEMPLATE="$DIR/coredns.yaml.sed"
 STUBDOMAINS=""
 UPSTREAM=\\/etc\\/resolv\.conf
@@ -128,3 +128,5 @@ sed -e "s/CLUSTER_DNS_IP/$CLUSTER_DNS_IP/g" \
     -e "s@FEDERATIONS@${FEDERATIONS//$orig/$replace}@g" \
     -e "s/UPSTREAMNAMESERVER/$UPSTREAM/g" \
     "${YAML_TEMPLATE}"
+
+# Raw file from: https://github.com/coredns/deployment/blob/master/kubernetes/deploy.sh

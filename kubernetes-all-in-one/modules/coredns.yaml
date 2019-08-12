@@ -179,3 +179,5 @@ spec:
   - name: metrics
     port: 9153
     protocol: TCP
+
+# Original file: https://github.com/coredns/deployment/blob/master/kubernetes/coredns.yaml.sed

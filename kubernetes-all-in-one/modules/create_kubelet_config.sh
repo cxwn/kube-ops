@@ -24,7 +24,7 @@ port: 10250
 readOnlyPort: 10255
 cgroupDriver: cgroupfs
 clusterDNS: ["10.0.0.2"]
-clusterDomain: cluster.local.
+clusterDomain: cluster.local
 failSwapOn: false
 authentication:
   anonymous:
