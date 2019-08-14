@@ -89,6 +89,7 @@ networking:
 scheduler: {}
 EOF
 kubeadm init --config kubeadm.yaml
+# kubeadm init --kubernetes-version=1.15.2 --pod-network-cidr=10.88.0.0/16 --apiserver-advertise-address=172.31.3.20
     fi
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -129,3 +130,25 @@ I0814 04:28:54.448853       1 controller_utils.go:1036] Caches are synced for en
 I0814 04:28:54.449094       1 controller_utils.go:1036] Caches are synced for service config controller
 
 ls /usr/lib/modules/$(uname -r)/kernel/net/netfilter/ipvs/ |grep  -e ip_vs
+
+apiServer:
+  extraArgs:
+    authorization-mode: Node,RBAC
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta2
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controllerManager: {}
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: k8s.gcr.io
+kind: ClusterConfiguration
+kubernetesVersion: v1.15.2
+networking:
+  dnsDomain: cluster.local
+  podSubnet: 10.88.0.0/16
+  serviceSubnet: 10.96.0.0/12
+scheduler: {}
