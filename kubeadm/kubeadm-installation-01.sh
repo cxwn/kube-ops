@@ -23,17 +23,7 @@ docker_version='18.09.8-3.el7' # Just support to v18.09.
         cat>/etc/docker/daemon.json<<EOF
 {
   "registry-mirrors": ["http://f1361db2.m.daocloud.io"],
-  "ipv6": true,
-  "fixed-cidr-v6": "2001:db8:1::/64",
-  "exec-opts": ["native.cgroupdriver=systemd"],
-  "log-driver": "json-file",
-  "log-opts": {
-  "max-size": "100m"
-  },
-  "storage-driver": "overlay2",
-  "storage-opts": [
-  "overlay2.override_kernel_check=true"
-  ]
+  "exec-opts": ["native.cgroupdriver=systemd"]
 }
 EOF
 
@@ -99,4 +89,4 @@ sed -i.bak 's/=enforcing/=disabled/' /etc/selinux/config
 
 # Disable the swap.  
 sed -i.bak 's/^.*swap/#&/g' /etc/fstab
-reboo
+reboot
